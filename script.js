@@ -29,6 +29,39 @@ class TaskManager {
         // Filter changes
         document.getElementById('categoryFilter').addEventListener('change', () => this.filterTasks());
         document.getElementById('priorityFilter').addEventListener('change', () => this.filterTasks());
+
+        // Seletores do modal
+        const editTaskModal = document.getElementById('editTaskModal');
+        const closeModalButton = document.querySelector('.close-modal');
+        const editTaskButtons = document.querySelectorAll('.edit-task-btn');
+
+        // Abrir modal de edição
+        editTaskButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                editTaskModal.classList.add('visible');
+            });
+        });
+
+        // Fechar modal de edição
+        closeModalButton.addEventListener('click', () => {
+            editTaskModal.classList.remove('visible');
+        });
+
+        // Fechar modal ao clicar fora do conteúdo
+        editTaskModal.addEventListener('click', (event) => {
+            if (event.target === editTaskModal) {
+                editTaskModal.classList.remove('visible');
+            }
+        });
+
+        // Salvar alterações da tarefa
+        const editTaskForm = document.getElementById('editTaskForm');
+        editTaskForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Lógica para salvar alterações
+            console.log('Alterações salvas!');
+            editTaskModal.classList.remove('visible');
+        });
     }
 
     addTask() {
@@ -114,11 +147,11 @@ class TaskManager {
         const categoryFilter = document.getElementById('categoryFilter');
         const priorityFilter = document.getElementById('priorityFilter');
 
-        categoryFilter.innerHTML = categories.map(category => 
+        categoryFilter.innerHTML = categories.map(category =>
             `<option value="${category}">${category}</option>`
         ).join('');
 
-        priorityFilter.innerHTML = priorities.map(priority => 
+        priorityFilter.innerHTML = priorities.map(priority =>
             `<option value="${priority}">${priority}</option>`
         ).join('');
     }
@@ -130,7 +163,7 @@ class TaskManager {
         tasksToRender.forEach(task => {
             const taskElement = document.createElement('div');
             taskElement.className = `task-item ${task.category.toLowerCase().replace(' ', '-')} ${task.completed ? 'completed' : ''}`;
-            
+
             taskElement.innerHTML = `
                 <div class="task-header">
                     <h3 class="task-title">${task.title}</h3>
@@ -147,7 +180,7 @@ class TaskManager {
                     </div>
                 </div>
             `;
-            
+
             tasksList.appendChild(taskElement);
         });
     }

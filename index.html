@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarefas Dev</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
-        <header>
-            <h1>📝 Tarefas Dev</h1>
-            <div class="theme-toggle">🌙</div>
+        <header class="header masculine-theme">
+            <h1 class="logo"><i class="fas fa-tasks"></i> Tarefas Dev</h1>
+            <button class="theme-toggle" aria-label="Alternar Tema"><i class="fas fa-moon"></i></button>
         </header>
-        
-        <div class="main-content">
-            <div class="add-task-section">
-                <h2>Add nova tarefa</h2>
-                <form id="taskForm">
+
+        <main class="main-content">
+            <section class="add-task-section">
+                <h2 class="section-title"><i class="fas fa-plus-circle"></i> Adicionar Nova Tarefa</h2>
+                <form id="taskForm" class="responsive-form">
                     <div class="form-group">
                         <label for="taskTitle">Tarefa</label>
                         <input type="text" id="taskTitle" placeholder="O que precisa ser feito?" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="taskDescription">Descrição</label>
-                        <textarea id="taskDescription" placeholder="Add detalhs sobre a tarefa..." required></textarea>
+                        <textarea id="taskDescription" placeholder="Adicione detalhes sobre a tarefa..."
+                            required></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="taskCategory">Categoria</label>
                         <select id="taskCategory" required>
-                            <option value="Feature Development">Desenvolvimento de Feature</option>
-                            <option value="Bug Fix">Bug Fix</option>
+                            <option value="Feature Development">Desenvolvimento de Funcionalidade</option>
+                            <option value="Bug Fix">Correção de Bug</option>
                             <option value="Documentation">Documentação</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="taskPriority">Prioridade</label>
                         <select id="taskPriority" required>
@@ -44,19 +49,19 @@
                             <option value="High">Alta</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="taskDueDate">Data de Entrega</label>
                         <input type="date" id="taskDueDate" required>
                     </div>
-                    
-                    <button type="submit" class="add-task-btn">+ Add Tarefa</button>
-                </form>
-            </div>
 
-            <div class="tasks-section">
-                <h2>Suas Tarefas</h2>
-                <div class="task-filters">
+                    <button type="submit" class="add-task-btn">+ Adicionar Tarefa</button>
+                </form>
+            </section>
+
+            <section class="tasks-section">
+                <h2 class="section-title"><i class="fas fa-list"></i> Suas Tarefas</h2>
+                <div class="task-filters responsive-filters">
                     <div class="filter-group">
                         <label>Categoria:</label>
                         <select id="categoryFilter">
@@ -70,25 +75,72 @@
                         </select>
                     </div>
                 </div>
-                <div id="tasksList"></div>
-            </div>
-        </div>
+                <div id="tasksList" class="responsive-tasks-list">
+                    <!-- Exemplo de tarefa -->
+                    <div class="task-card">
+                        <h3 class="task-title">Título da Tarefa</h3>
+                        <p class="task-description">Descrição da tarefa...</p>
+                        <button class="edit-task-btn" data-task-id="1"><i class="fas fa-edit"></i> Editar</button>
+                    </div>
+                </div>
+            </section>
 
-        <div class="stats">
+            <!-- Modal para edição de tarefas -->
+            <div id="editTaskModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Editar Tarefa</h2>
+                    <form id="editTaskForm" class="responsive-form">
+                        <div class="form-group">
+                            <label for="editTaskTitle">Tarefa</label>
+                            <input type="text" id="editTaskTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTaskDescription">Descrição</label>
+                            <textarea id="editTaskDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTaskCategory">Categoria</label>
+                            <select id="editTaskCategory" required>
+                                <option value="Feature Development">Desenvolvimento de Funcionalidade</option>
+                                <option value="Bug Fix">Correção de Bug</option>
+                                <option value="Documentation">Documentação</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTaskPriority">Prioridade</label>
+                            <select id="editTaskPriority" required>
+                                <option value="Low">Baixa</option>
+                                <option value="Medium">Média</option>
+                                <option value="High">Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTaskDueDate">Data de Entrega</label>
+                            <input type="date" id="editTaskDueDate" required>
+                        </div>
+                        <button type="submit" class="save-task-btn">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="stats masculine-theme">
             <div class="stat-card">
                 <span class="stat-number" id="activeTasks">2</span>
-                <span class="stat-label">Tarefas Ativas</span>
+                <span class="stat-label"><i class="fas fa-tasks"></i> Tarefas Ativas</span>
             </div>
             <div class="stat-card">
                 <span class="stat-number" id="completedTasks">1</span>
-                <span class="stat-label">Completas</span>
+                <span class="stat-label">Tarefas Completas</span>
             </div>
             <div class="stat-card">
                 <span class="stat-number" id="highPriorityTasks">1</span>
-                <span class="stat-label">Prioridade alta</span>
+                <span class="stat-label">Prioridade Alta</span>
             </div>
-        </div>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
